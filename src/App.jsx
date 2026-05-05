@@ -1,4 +1,4 @@
-import { startTransition, useMemo, useState } from "react";
+import React, { startTransition, useMemo, useState } from "react";
 import { prototypeHighlights, prototypeRoles } from "./prototypeData.js";
 
 function RoleButton({ role, isActive, onSelect }) {
