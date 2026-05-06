@@ -158,7 +158,7 @@ export default function App() {
           <p className="eyebrow">STISMS product prototype</p>
           <h1>Smart taxi safety, simplified.</h1>
           <p className="hero-text">
-            A clean demo surface for compliance, rank operations, learner transport, payments, and trust.
+            A demo surface for compliance, rank operations, learner transport, payments, and trust.
           </p>
           <div className="hero-tags">
             {heroTags.map((tag) => (
