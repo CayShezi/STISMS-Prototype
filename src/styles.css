@@ -1,22 +1,23 @@
 :root {
   color-scheme: light;
-  --bg: #f4efe7;
-  --bg-deep: #e8ddd0;
-  --panel: rgba(255, 252, 247, 0.84);
-  --panel-strong: #fffdf8;
+  --bg: #f5efe6;
+  --bg-deep: #ebe0d0;
+  --panel: rgba(255, 252, 247, 0.9);
+  --panel-strong: rgba(255, 255, 255, 0.96);
   --ink: #223041;
   --muted: #65758b;
-  --line: rgba(34, 48, 65, 0.12);
+  --line: rgba(34, 48, 65, 0.1);
+  --line-strong: rgba(34, 48, 65, 0.16);
   --teal: #0f766e;
   --teal-soft: rgba(15, 118, 110, 0.12);
   --amber: #c87918;
-  --amber-soft: rgba(200, 121, 24, 0.14);
+  --amber-soft: rgba(200, 121, 24, 0.12);
   --shadow: 0 24px 60px rgba(34, 48, 65, 0.12);
-  --radius-xl: 28px;
-  --radius-lg: 20px;
-  --radius-md: 14px;
+  --radius-xl: 30px;
+  --radius-lg: 22px;
+  --radius-md: 16px;
   --font-body: "Segoe UI Variable", "Aptos", "Trebuchet MS", sans-serif;
-  --font-display: "Georgia", "Cambria", "Times New Roman", serif;
+  --font-display: "Iowan Old Style", "Georgia", "Cambria", serif;
 }
 
 * {
@@ -34,8 +35,8 @@ body {
   font-family: var(--font-body);
   color: var(--ink);
   background:
-    radial-gradient(circle at top left, rgba(15, 118, 110, 0.16), transparent 34%),
-    radial-gradient(circle at right 10%, rgba(200, 121, 24, 0.18), transparent 28%),
+    radial-gradient(circle at top left, rgba(15, 118, 110, 0.14), transparent 32%),
+    radial-gradient(circle at 85% 15%, rgba(200, 121, 24, 0.14), transparent 24%),
     linear-gradient(180deg, #f7f1e8 0%, #f0e8dc 100%);
 }
 
@@ -44,14 +45,13 @@ button {
 }
 
 .app-shell {
-  width: min(1380px, calc(100% - 32px));
-  margin: 24px auto 40px;
+  width: min(1320px, calc(100% - 32px));
+  margin: 20px auto 40px;
 }
 
 .hero-card,
 .summary-card,
 .journey-card,
-.notes-card,
 .canvas-card,
 .role-rail {
   background: var(--panel);
@@ -61,38 +61,38 @@ button {
 }
 
 .hero-card {
-  border-radius: 36px;
+  border-radius: 40px;
   padding: 32px;
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(320px, 0.9fr);
+  grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.7fr);
   gap: 24px;
   overflow: hidden;
 }
 
 .hero-copy h1,
 .section-heading h2,
+.summary-head h2,
 .canvas-header h3,
-.journey-step h3,
 .mockup-hero h4,
-.dashboard-panel h4 {
+.dashboard-panel h4,
+.journey-step h3 {
   font-family: var(--font-display);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.035em;
 }
 
 .hero-copy h1 {
-  margin: 8px 0 12px;
-  font-size: clamp(2.5rem, 5vw, 4.8rem);
-  line-height: 0.95;
+  margin: 8px 0 10px;
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  line-height: 0.92;
+  max-width: 10ch;
 }
 
 .hero-text,
-.section-heading p,
-.canvas-header p,
-.note-card p,
-.journey-step p,
-.role-tagline,
-.mockup-hero p,
-.dashboard-panel p {
+.summary-tagline,
+.metric-card p,
+.role-platform,
+.scene-footer,
+.screen-tab-mode {
   color: var(--muted);
 }
 
@@ -100,59 +100,121 @@ button {
   margin: 0;
   color: var(--teal);
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
   font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
 }
 
-.hero-grid {
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.hero-tag,
+.platform-chip,
+.canvas-mode,
+.role-count,
+.journey-status,
+.mockup-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.hero-tag {
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(15, 118, 110, 0.14);
+  color: var(--ink);
+}
+
+.hero-stats {
   display: grid;
   gap: 14px;
   align-content: start;
 }
 
-.hero-pill {
-  padding: 16px 18px;
-  border-radius: 18px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(255, 247, 235, 0.88));
-  border: 1px solid rgba(200, 121, 24, 0.16);
-  color: var(--ink);
-  animation: float-in 480ms ease both;
+.hero-stat,
+.metric-card,
+.journey-step,
+.screen-tab,
+.dashboard-stat,
+.dashboard-panel,
+.mockup-tile,
+.role-button {
+  background: var(--panel-strong);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+}
+
+.hero-stat {
+  padding: 20px;
+}
+
+.hero-stat span,
+.metric-card span,
+.dashboard-stat span,
+.mockup-label,
+.screen-tab-index {
+  display: inline-block;
+  color: var(--amber);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero-stat strong,
+.metric-card strong,
+.dashboard-stat strong,
+.mockup-tile strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 1.9rem;
 }
 
 .layout-grid {
   margin-top: 24px;
   display: grid;
-  grid-template-columns: 330px minmax(0, 1fr);
+  grid-template-columns: 280px minmax(0, 1fr);
   gap: 24px;
 }
 
 .role-rail {
-  border-radius: var(--radius-xl);
-  padding: 24px;
   position: sticky;
   top: 18px;
   align-self: start;
+  border-radius: var(--radius-xl);
+  padding: 22px;
+}
+
+.section-heading.compact h2 {
+  margin: 8px 0 0;
+  font-size: clamp(1.5rem, 2vw, 2.3rem);
 }
 
 .role-stack {
   display: grid;
   gap: 12px;
+  margin-top: 18px;
 }
 
 .role-button {
   width: 100%;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.72);
-  border-radius: 18px;
-  padding: 16px;
+  padding: 15px 16px;
   text-align: left;
   cursor: pointer;
-  transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+  transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease, background 140ms ease;
 }
 
 .role-button:hover,
-.role-button:focus-visible {
+.role-button:focus-visible,
+.screen-tab:hover,
+.screen-tab:focus-visible {
   transform: translateY(-2px);
   border-color: rgba(15, 118, 110, 0.28);
   box-shadow: 0 12px 28px rgba(15, 118, 110, 0.12);
@@ -160,25 +222,29 @@ button {
 }
 
 .role-button.active {
-  background: linear-gradient(135deg, rgba(15, 118, 110, 0.16), rgba(255, 255, 255, 0.95));
-  border-color: rgba(15, 118, 110, 0.4);
+  background: linear-gradient(135deg, rgba(15, 118, 110, 0.14), rgba(255, 255, 255, 0.96));
+  border-color: rgba(15, 118, 110, 0.36);
 }
 
 .role-button-top {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .role-name {
   font-weight: 700;
+  font-size: 1rem;
 }
 
-.role-platform {
-  color: var(--amber);
-  font-size: 0.82rem;
-  font-weight: 700;
+.role-count {
+  min-width: 38px;
+  padding: 6px 10px;
+  background: var(--teal-soft);
+  color: var(--teal);
+  font-size: 0.8rem;
 }
 
 .content-column {
@@ -188,21 +254,39 @@ button {
 
 .summary-card,
 .journey-card,
-.notes-card,
 .canvas-card {
   border-radius: var(--radius-xl);
   padding: 24px;
 }
 
-.section-heading h2,
+.summary-head {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.summary-head h2,
 .canvas-header h3 {
   margin: 8px 0 10px;
-  font-size: clamp(1.6rem, 2.4vw, 2.6rem);
+  font-size: clamp(1.7rem, 2.4vw, 2.6rem);
+}
+
+.summary-tagline {
+  margin: 0;
+  max-width: 52ch;
+}
+
+.platform-chip {
+  padding: 10px 14px;
+  background: var(--amber-soft);
+  color: var(--amber);
+  white-space: nowrap;
 }
 
 .metric-grid,
-.journey-grid,
-.notes-grid {
+.journey-grid {
   display: grid;
   gap: 14px;
 }
@@ -211,40 +295,16 @@ button {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.metric-card,
-.journey-step,
-.note-card,
-.screen-tab,
-.dashboard-stat,
-.dashboard-panel,
-.mockup-tile {
-  border-radius: 18px;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.76);
-}
-
 .metric-card {
   padding: 18px;
 }
 
-.metric-card span,
-.mockup-label,
-.dashboard-stat span,
-.journey-status {
-  display: inline-block;
-  color: var(--amber);
-  font-size: 0.8rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+.metric-card strong {
+  font-size: 1.65rem;
 }
 
-.metric-card strong,
-.dashboard-stat strong,
-.mockup-tile strong {
-  display: block;
-  margin-top: 8px;
-  font-size: 1.6rem;
+.metric-card p {
+  margin: 10px 0 0;
 }
 
 .journey-grid {
@@ -253,11 +313,30 @@ button {
 
 .journey-step {
   padding: 18px;
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+
+.journey-index {
+  color: var(--amber);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
 }
 
 .journey-step h3 {
-  margin: 10px 0 8px;
+  margin: 0;
   font-size: 1.3rem;
+}
+
+.journey-status {
+  justify-self: start;
+  padding: 8px 12px;
+  background: rgba(34, 48, 65, 0.06);
+  color: var(--ink);
+  font-size: 0.82rem;
+  text-transform: capitalize;
 }
 
 .screen-board {
@@ -272,33 +351,27 @@ button {
 }
 
 .screen-tab {
+  padding: 14px 16px;
+  display: flex;
+  gap: 14px;
+  align-items: start;
   text-align: left;
-  padding: 16px;
   cursor: pointer;
-  transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
-}
-
-.screen-tab:hover,
-.screen-tab:focus-visible {
-  outline: none;
-  transform: translateY(-2px);
-  border-color: rgba(200, 121, 24, 0.32);
+  transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease, background 140ms ease;
 }
 
 .screen-tab.active {
-  background: linear-gradient(135deg, rgba(200, 121, 24, 0.14), rgba(255, 255, 255, 0.92));
-  border-color: rgba(200, 121, 24, 0.34);
+  background: linear-gradient(135deg, rgba(200, 121, 24, 0.14), rgba(255, 255, 255, 0.96));
+  border-color: rgba(200, 121, 24, 0.28);
+}
+
+.screen-tab-copy {
+  display: grid;
+  gap: 4px;
 }
 
 .screen-tab-title {
-  display: block;
   font-weight: 700;
-  margin-bottom: 6px;
-}
-
-.screen-tab-mode {
-  color: var(--muted);
-  font-size: 0.88rem;
 }
 
 .canvas-header {
@@ -311,19 +384,13 @@ button {
 .canvas-mode {
   align-self: start;
   padding: 10px 14px;
-  border-radius: 999px;
   background: var(--amber-soft);
   color: var(--amber);
-  font-weight: 700;
 }
 
 .canvas-mode.mobile {
   background: var(--teal-soft);
   color: var(--teal);
-}
-
-.prototype-canvas.desktop {
-  padding: 10px 0 0;
 }
 
 .prototype-canvas.mobile {
@@ -335,32 +402,31 @@ button {
   width: min(360px, 100%);
   border-radius: 38px;
   padding: 14px;
-  background: linear-gradient(180deg, #1c1f24 0%, #0f1419 100%);
+  background: linear-gradient(180deg, #1a1e24 0%, #10151b 100%);
   box-shadow: 0 22px 56px rgba(17, 24, 39, 0.34);
 }
 
 .phone-notch {
   width: 42%;
   height: 24px;
-  border-radius: 0 0 18px 18px;
   margin: 0 auto;
+  border-radius: 0 0 18px 18px;
   background: rgba(255, 255, 255, 0.08);
 }
 
 .phone-screen {
   margin-top: 12px;
-  border-radius: 30px;
+  min-height: 620px;
   padding: 18px;
-  background:
-    radial-gradient(circle at top right, rgba(200, 121, 24, 0.16), transparent 32%),
-    linear-gradient(180deg, #f7f2ea 0%, #fdfbf6 100%);
-  min-height: 640px;
+  border-radius: 30px;
   display: grid;
-  gap: 18px;
+  gap: 16px;
+  background:
+    radial-gradient(circle at top right, rgba(200, 121, 24, 0.14), transparent 28%),
+    linear-gradient(180deg, #f9f3ea 0%, #fdfbf7 100%);
 }
 
-.mockup-header,
-.mockup-footer {
+.mockup-header {
   display: flex;
   justify-content: space-between;
   gap: 12px;
@@ -370,22 +436,20 @@ button {
 
 .mockup-chip {
   padding: 6px 10px;
-  border-radius: 999px;
   background: var(--teal-soft);
   color: var(--teal);
-  font-weight: 700;
 }
 
 .mockup-hero {
   padding: 18px;
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.82);
   border: 1px solid rgba(15, 118, 110, 0.12);
 }
 
 .mockup-hero h4 {
-  margin: 6px 0 8px;
-  font-size: 1.8rem;
+  margin: 8px 0 0;
+  font-size: 1.7rem;
 }
 
 .mockup-stack {
@@ -393,8 +457,10 @@ button {
   gap: 12px;
 }
 
-.mockup-tile {
-  padding: 16px;
+.mockup-tile,
+.dashboard-stat,
+.dashboard-panel {
+  padding: 18px;
 }
 
 .mockup-actions,
@@ -408,7 +474,7 @@ button {
 .dashboard-actions button {
   border: 0;
   border-radius: 14px;
-  padding: 12px 14px;
+  padding: 11px 14px;
   background: linear-gradient(135deg, var(--teal), #15847b);
   color: white;
   cursor: pointer;
@@ -420,8 +486,7 @@ button {
 }
 
 .dashboard-strip,
-.dashboard-body,
-.notes-grid {
+.dashboard-body {
   display: grid;
   gap: 14px;
 }
@@ -430,48 +495,26 @@ button {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.dashboard-stat,
-.dashboard-panel {
-  padding: 18px;
-}
-
 .dashboard-body {
-  grid-template-columns: 1.2fr 0.8fr;
-}
-
-.dashboard-column {
-  display: grid;
-  gap: 14px;
+  grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
 }
 
 .dashboard-panel.emphasis {
-  background: linear-gradient(135deg, rgba(15, 118, 110, 0.14), rgba(255, 255, 255, 0.94));
+  background: linear-gradient(135deg, rgba(15, 118, 110, 0.14), rgba(255, 255, 255, 0.96));
 }
 
-.note-list {
-  margin: 0;
-  padding-left: 18px;
-  color: var(--muted);
+.dashboard-panel h4 {
+  margin: 8px 0 0;
+  font-size: 1.7rem;
+  line-height: 1.05;
 }
 
-.notes-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.note-card {
-  padding: 18px;
-}
-
-@keyframes float-in {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.scene-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 4px;
+  font-size: 0.9rem;
 }
 
 @media (max-width: 1120px) {
@@ -480,14 +523,21 @@ button {
   .metric-grid,
   .journey-grid,
   .screen-tabs,
-  .notes-grid,
   .dashboard-strip,
   .dashboard-body {
     grid-template-columns: 1fr;
   }
 
+  .hero-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .role-rail {
     position: static;
+  }
+
+  .summary-head {
+    flex-direction: column;
   }
 }
 
@@ -500,7 +550,6 @@ button {
   .hero-card,
   .summary-card,
   .journey-card,
-  .notes-card,
   .canvas-card,
   .role-rail {
     padding: 18px;
@@ -508,10 +557,23 @@ button {
   }
 
   .hero-copy h1 {
-    font-size: 2.4rem;
+    font-size: 2.6rem;
+    max-width: none;
+  }
+
+  .screen-tab {
+    gap: 10px;
+  }
+
+  .hero-stats {
+    grid-template-columns: 1fr;
   }
 
   .phone-screen {
     min-height: 560px;
+  }
+
+  .scene-footer {
+    flex-direction: column;
   }
 }

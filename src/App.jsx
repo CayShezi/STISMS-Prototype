@@ -1,5 +1,13 @@
 import React, { startTransition, useMemo, useState } from "react";
-import { prototypeHighlights, prototypeRoles } from "./prototypeData.js";
+import { prototypeRoles } from "./prototypeData.js";
+
+const totalScenes = prototypeRoles.reduce((count, role) => count + role.screens.length, 0);
+const heroStats = [
+  { label: "Roles", value: String(prototypeRoles.length).padStart(2, "0") },
+  { label: "Scenes", value: String(totalScenes).padStart(2, "0") },
+  { label: "Surfaces", value: "Web + Mobile" }
+];
+const heroTags = ["Compliance", "Operations", "Transport", "Payments", "Safety"];
 
 function RoleButton({ role, isActive, onSelect }) {
   return (
@@ -11,9 +19,9 @@ function RoleButton({ role, isActive, onSelect }) {
     >
       <span className="role-button-top">
         <span className="role-name">{role.label}</span>
-        <span className="role-platform">{role.platform}</span>
+        <span className="role-count">{String(role.screens.length).padStart(2, "0")}</span>
       </span>
-      <span className="role-tagline">{role.tagline}</span>
+      <span className="role-platform">{role.platform}</span>
     </button>
   );
 }
@@ -29,8 +37,11 @@ function ScreenTabs({ role, activeIndex, onSelect }) {
           onClick={() => onSelect(index)}
           aria-pressed={activeIndex === index}
         >
-          <span className="screen-tab-title">{screen.title}</span>
-          <span className="screen-tab-mode">{screen.mode === "mobile" ? "Mobile concept" : "Desktop concept"}</span>
+          <span className="screen-tab-index">{String(index + 1).padStart(2, "0")}</span>
+          <span className="screen-tab-copy">
+            <span className="screen-tab-title">{screen.title}</span>
+            <span className="screen-tab-mode">{screen.mode === "mobile" ? "Mobile" : "Desktop"}</span>
+          </span>
         </button>
       ))}
     </div>
@@ -44,12 +55,11 @@ function PrototypeCanvas({ role, screen }) {
     <section className="canvas-card">
       <div className="canvas-header">
         <div>
-          <p className="eyebrow">Active prototype surface</p>
+          <p className="eyebrow">Selected scene</p>
           <h3>{screen.title}</h3>
-          <p>{screen.summary}</p>
         </div>
         <span className={`canvas-mode${isMobile ? " mobile" : ""}`}>
-          {isMobile ? "Mobile storyboard" : "Dashboard storyboard"}
+          {isMobile ? "Mobile" : "Desktop"}
         </span>
       </div>
 
@@ -63,9 +73,8 @@ function PrototypeCanvas({ role, screen }) {
                 <span className="mockup-chip">{role.label}</span>
               </div>
               <div className="mockup-hero">
-                <p className="eyebrow">STISMS Prototype</p>
+                <p className="eyebrow">Live view</p>
                 <h4>{screen.title}</h4>
-                <p>{role.tagline}</p>
               </div>
               <div className="mockup-stack">
                 {screen.panels.map((panel) => (
@@ -82,11 +91,9 @@ function PrototypeCanvas({ role, screen }) {
                   </button>
                 ))}
               </div>
-              <div className="mockup-footer">
-                <span>Home</span>
-                <span>Journey</span>
-                <span>Alerts</span>
-                <span>Profile</span>
+              <div className="scene-footer">
+                <span>{role.platform}</span>
+                <span>{role.stage}</span>
               </div>
             </div>
           </div>
@@ -101,33 +108,24 @@ function PrototypeCanvas({ role, screen }) {
               ))}
             </div>
             <div className="dashboard-body">
-              <div className="dashboard-column">
-                <article className="dashboard-panel emphasis">
-                  <p className="eyebrow">Primary decision panel</p>
-                  <h4>{screen.title}</h4>
-                  <p>{screen.summary}</p>
-                </article>
-                <article className="dashboard-panel">
-                  <p className="eyebrow">Prototype actions</p>
-                  <div className="dashboard-actions">
-                    {screen.actions.map((action) => (
-                      <button type="button" key={action}>
-                        {action}
-                      </button>
-                    ))}
-                  </div>
-                </article>
-              </div>
-              <div className="dashboard-column">
-                <article className="dashboard-panel">
-                  <p className="eyebrow">Storyboard notes</p>
-                  <ul className="note-list">
-                    {screen.notes.map((note) => (
-                      <li key={note}>{note}</li>
-                    ))}
-                  </ul>
-                </article>
-              </div>
+              <article className="dashboard-panel emphasis">
+                <p className="eyebrow">Focus</p>
+                <h4>{screen.summary}</h4>
+              </article>
+              <article className="dashboard-panel">
+                <p className="eyebrow">Primary actions</p>
+                <div className="dashboard-actions">
+                  {screen.actions.map((action) => (
+                    <button type="button" key={action}>
+                      {action}
+                    </button>
+                  ))}
+                </div>
+              </article>
+            </div>
+            <div className="scene-footer">
+              <span>{role.platform}</span>
+              <span>{role.stage}</span>
             </div>
           </div>
         )}
@@ -157,30 +155,35 @@ export default function App() {
     <div className="app-shell">
       <header className="hero-card">
         <div className="hero-copy">
-          <p className="eyebrow">STISMS clickable prototype</p>
-          <h1>One project story, rebuilt as a presentation-friendly prototype.</h1>
+          <p className="eyebrow">STISMS product prototype</p>
+          <h1>Smart taxi safety, simplified.</h1>
           <p className="hero-text">
-            This separate prototype focuses on demonstrating the STISMS concept with clean role journeys,
-            calmer storytelling, and screens that are easy to present to lecturers, stakeholders, and testers.
+            A clean demo surface for compliance, rank operations, learner transport, payments, and trust.
           </p>
+          <div className="hero-tags">
+            {heroTags.map((tag) => (
+              <span className="hero-tag" key={tag}>
+                {tag}
+              </span>
+            ))}
+          </div>
         </div>
-        <div className="hero-grid">
-          {prototypeHighlights.map((highlight) => (
-            <div className="hero-pill" key={highlight}>
-              {highlight}
-            </div>
+
+        <div className="hero-stats">
+          {heroStats.map((stat) => (
+            <article className="hero-stat" key={stat.label}>
+              <span>{stat.label}</span>
+              <strong>{stat.value}</strong>
+            </article>
           ))}
         </div>
       </header>
 
       <div className="layout-grid">
         <aside className="role-rail">
-          <div className="section-heading">
-            <p className="eyebrow">Prototype roles</p>
-            <h2>Choose a journey</h2>
-            <p>
-              Each role view focuses on the part of STISMS that matters most to that persona.
-            </p>
+          <div className="section-heading compact">
+            <p className="eyebrow">Roles</p>
+            <h2>Journeys</h2>
           </div>
           <div className="role-stack">
             {prototypeRoles.map((entry) => (
@@ -196,11 +199,15 @@ export default function App() {
 
         <main className="content-column">
           <section className="summary-card">
-            <div className="section-heading">
-              <p className="eyebrow">{role.stage}</p>
-              <h2>{role.label}</h2>
-              <p>{role.summary}</p>
+            <div className="summary-head">
+              <div>
+                <p className="eyebrow">{role.stage}</p>
+                <h2>{role.label}</h2>
+                <p className="summary-tagline">{role.tagline}</p>
+              </div>
+              <span className="platform-chip">{role.platform}</span>
             </div>
+
             <div className="metric-grid">
               {role.metrics.map((metric) => (
                 <article className="metric-card" key={`${role.id}-${metric.label}`}>
@@ -213,45 +220,28 @@ export default function App() {
           </section>
 
           <section className="journey-card">
-            <div className="section-heading">
-              <p className="eyebrow">Journey map</p>
-              <h2>{role.label} workflow prototype</h2>
+            <div className="section-heading compact">
+              <p className="eyebrow">Core flow</p>
+              <h2>{role.label}</h2>
             </div>
             <div className="journey-grid">
-              {role.journey.map((step) => (
+              {role.journey.map((step, index) => (
                 <article className="journey-step" key={`${role.id}-${step.title}`}>
-                  <span className="journey-status">{step.status}</span>
+                  <span className="journey-index">{String(index + 1).padStart(2, "0")}</span>
                   <h3>{step.title}</h3>
-                  <p>{step.detail}</p>
+                  <span className="journey-status">{step.status}</span>
                 </article>
               ))}
             </div>
           </section>
 
           <section className="screen-board">
-            <div className="section-heading">
-              <p className="eyebrow">Screen set</p>
-              <h2>Open a prototype scene</h2>
-              <p>
-                Switch between the key screens we would use in a demo walkthrough for this role.
-              </p>
+            <div className="section-heading compact">
+              <p className="eyebrow">Scenes</p>
+              <h2>Prototype screens</h2>
             </div>
             <ScreenTabs role={role} activeIndex={selectedScreenIndex} onSelect={setSelectedScreenIndex} />
             <PrototypeCanvas role={role} screen={activeScreen} />
-          </section>
-
-          <section className="notes-card">
-            <div className="section-heading">
-              <p className="eyebrow">Prototype notes</p>
-              <h2>Design and product assumptions</h2>
-            </div>
-            <div className="notes-grid">
-              {role.notes.map((note) => (
-                <article className="note-card" key={note}>
-                  <p>{note}</p>
-                </article>
-              ))}
-            </div>
           </section>
         </main>
       </div>
